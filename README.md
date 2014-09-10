@@ -1,4 +1,4 @@
 GPXView
 =======
 
-GPXViewer for viewing and comparing multiple tracks
+GPXViewer is a tool for viewing, analyzing and comparing multiple tracks.
