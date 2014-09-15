@@ -5,8 +5,10 @@
  */
 package gpx;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Date;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -58,7 +60,7 @@ public class GpxFile {
 	}
 
 	
-	public static GpxFile ReadGPXFile(String filename) throws FileNotFoundException, XMLStreamException {
+	public static GpxFile ReadGPXFile(File file) throws FileNotFoundException, XMLStreamException, IOException {
 		int state = START;
 		GpxFile g = new GpxFile();
 		Track t = null;
@@ -66,7 +68,7 @@ public class GpxFile {
 		TrackPoint p = null;
 		StringBuilder tmp = new StringBuilder();
 		XMLInputFactory xmlif = XMLInputFactory.newInstance();
-		XMLStreamReader xmlr = xmlif.createXMLStreamReader(filename, new FileInputStream(filename));
+		XMLStreamReader xmlr = xmlif.createXMLStreamReader(file.getCanonicalPath(), new FileInputStream(file));
 		while (xmlr.hasNext()) {
 			switch (xmlr.getEventType()) {
 				case XMLStreamConstants.START_ELEMENT:

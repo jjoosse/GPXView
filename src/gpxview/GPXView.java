@@ -8,7 +8,9 @@ package gpxview;
 
 import gpx.GpxFile;
 import gpxview.gui.GuiFrame;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.stream.XMLStreamException;
@@ -24,11 +26,13 @@ public class GPXView {
 	 */
 	public static void main(String[] args) {
 		try {
-			GpxFile gpx = GpxFile.ReadGPXFile(args[0]);
+			GpxFile gpx = GpxFile.ReadGPXFile(new File(args[0]));
 			System.out.println(gpx.toString());
 		} catch (FileNotFoundException ex) {
 			Logger.getLogger(GPXView.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (XMLStreamException ex) {
+			Logger.getLogger(GPXView.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (IOException ex) {
 			Logger.getLogger(GPXView.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		

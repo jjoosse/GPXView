@@ -94,9 +94,9 @@ public class GuiFrame extends javax.swing.JFrame {
 		int retval = jf.showOpenDialog(this);
 		if (retval == JFileChooser.APPROVE_OPTION) {
 			GpxFile gpx;
-			File filename = jf.getSelectedFile();
+			File file = jf.getSelectedFile();
 			try {
-				gpx = GpxFile.ReadGPXFile(filename.getCanonicalPath());
+				gpx = GpxFile.ReadGPXFile(file);
 				System.out.println(gpx.toString());
 			} catch (FileNotFoundException ex) {
 				Logger.getLogger(GuiFrame.class.getName()).log(Level.SEVERE, null, ex);
