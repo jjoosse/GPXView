@@ -27,7 +27,7 @@ public class TrackDetailsFrame extends javax.swing.JFrame {
 		this.df = DateFormat.getDateTimeInstance();
 		initComponents();
 	}
-	
+
 	public TrackDetailsFrame(gpx.Track t) {
 		this.df = DateFormat.getDateTimeInstance();
 		this.track1 = t;
@@ -133,8 +133,9 @@ public class TrackDetailsFrame extends javax.swing.JFrame {
 
 	private final DateFormat df;
 	private final Track track1;
-	
+
 	private void fillTable() {
+		TrackPoint prev = null;
 		ArrayList<ArrayList<String>> d = new ArrayList<ArrayList<String>>();
 		for (TrackSegment g : track1.getTrackSegmentList()) {
 			for (TrackPoint tp : g.getTrackPointList()) {
@@ -143,17 +144,34 @@ public class TrackDetailsFrame extends javax.swing.JFrame {
 				row.add(Double.toString(tp.getLon()));
 				row.add(Double.toString(tp.getElevation()));
 				row.add(df.format(tp.getTime()));
+				double dist = 0.0;
+				if (prev != null) {
+					dist = tp.CalculateDistance(prev);
+				}
+				row.add(Double.toString(dist));
+				double speed = 0.0;
+				if (prev != null) {
+					long timeinterval = tp.getTime().getTime() - prev.getTime().getTime();
+					System.out.println(timeinterval);
+					 // Time is in milisec, distance in meters -> to kilometers/hour
+					speed = (dist / timeinterval) * 3600;
+				}
+				row.add(Double.toString(speed));
 				d.add(row);
+				prev = tp;
 			}
 		}
 		((TrackTableModel) jTable1.getModel()).setTableData(d);
 	}
-	
+
 	class TrackTableModel extends AbstractTableModel {
 
 		ArrayList<ArrayList<String>> tableData;
-		String[] columnNames = {"Latitude", "Longitude", "Elevation", "Time"};
+		String[] columnNames
+			= {"Latitude", "Longitude", "Elevation", "Time", "Distance", "Speed"};
 		public Class<?>[] colTypes = {String.class,
+			String.class,
+			String.class,
 			String.class,
 			String.class,
 			String.class};
@@ -166,32 +184,32 @@ public class TrackDetailsFrame extends javax.swing.JFrame {
 				return 0;
 			}
 		}
-		
+
 		@Override
 		public int getColumnCount() {
 			return columnNames.length;
 		}
-		
+
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			return tableData.get(rowIndex).get(columnIndex);
 		}
-		
+
 		public void setTableData(ArrayList<ArrayList<String>> data) {
 			this.tableData = data;
 			fireTableDataChanged();
 		}
-		
+
 		@Override
 		public Class<?> getColumnClass(int columnIndex) {
 			return colTypes[columnIndex];
-			
+
 		}
-		
+
 		@Override
 		public String getColumnName(int column) {
 			return columnNames[column];
 		}
-		
+
 	}
 }

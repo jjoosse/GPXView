@@ -6,6 +6,10 @@
 package gpx;
 
 import java.util.Date;
+import org.gavaghan.geodesy.Ellipsoid;
+import org.gavaghan.geodesy.GeodeticCalculator;
+import org.gavaghan.geodesy.GeodeticMeasurement;
+import org.gavaghan.geodesy.GlobalPosition;
 
 /**
  *
@@ -109,5 +113,24 @@ public class TrackPoint {
 	public String toString() {
 		return "TrackPoint{" + "lat=" + lat + ", lon=" + lon + ", elevation=" + elevation + ", time=" + time + '}';
 	}
+	
+	/**
+	 * Calculates the distance between this point and the TrackPoint 
+	 * passed as argument.
+	 * 
+	 * @param tp TrackPoint to calculate distance to.
+	 * @return distance in meters
+	 */
+public double CalculateDistance(TrackPoint tp) {
+	// instantiate the calculator
+		GeodeticCalculator geoCalc = new GeodeticCalculator();
 
+		// select a reference elllipsoid
+		Ellipsoid reference = Ellipsoid.WGS84;
+		GlobalPosition first = new GlobalPosition(this.getLat(), this.getLon(), this.getElevation());
+		GlobalPosition second = new GlobalPosition(tp.getLat(),tp.getLon(),tp.getElevation());
+		GeodeticMeasurement geoMeasurement = 
+			geoCalc.calculateGeodeticMeasurement(reference, first, second);
+		return geoMeasurement.getPointToPointDistance();
+}
 }
