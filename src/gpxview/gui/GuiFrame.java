@@ -18,6 +18,7 @@ import javax.xml.stream.XMLStreamException;
  *
  * @author Routz-15032012
  */
+@SuppressWarnings("serial")
 public class GuiFrame extends javax.swing.JFrame {
 
 	/**

@@ -16,6 +16,7 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Routz-15032012
  */
+@SuppressWarnings("serial")
 public class TrackDetailsFrame extends javax.swing.JFrame {
 
 	/**
