@@ -98,6 +98,9 @@ public class GuiFrame extends javax.swing.JFrame {
 			try {
 				gpx = GpxFile.ReadGPXFile(file);
 				System.out.println(gpx.toString());
+				TrackDetailsFrame t = new TrackDetailsFrame(gpx.getTrack());
+				t.setVisible(true);
+				
 			} catch (FileNotFoundException ex) {
 				Logger.getLogger(GuiFrame.class.getName()).log(Level.SEVERE, null, ex);
 			} catch (IOException ex) {
