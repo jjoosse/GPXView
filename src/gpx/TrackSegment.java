@@ -43,4 +43,19 @@ public class TrackSegment {
 		return "TrackSegment{" + "TrackPointList=" + TrackPointList + '}';
 	}
 	
+	/**
+	 *
+	 * @return Total distance in meters of segment.
+	 */
+	public double calculateDistance() {
+		double dist = 0;
+		TrackPoint prev = null;
+		for ( TrackPoint tp : TrackPointList) {
+			if (prev !=null) {
+				dist += tp.CalculateDistance(prev);
+			}
+			prev=tp;
+		}
+		return dist;
+	}
 }

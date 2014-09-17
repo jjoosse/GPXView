@@ -18,6 +18,7 @@ public class Track {
 	private String name;
 	private Date StartTime;
 	private ArrayList<TrackSegment> TrackSegmentList;
+	private double distance=0;
 
 	public Track() {
 		TrackSegmentList = new ArrayList<>();
@@ -39,6 +40,7 @@ public class Track {
 	 */
 	public void setTrackSegmentList(ArrayList<TrackSegment> TrackSegmentList) {
 		this.TrackSegmentList = TrackSegmentList;
+		distance = 0;
 	}
 
 	/**
@@ -81,5 +83,23 @@ public class Track {
 	public String toString() {
 		return "Track{" + "name=" + name + ", StartTime=" + StartTime + ", TrackSegmentList=" + TrackSegmentList + '}';
 	}
+
+	public double getDistance() {
+		if (distance == 0.0 && TrackSegmentList.size() > 0) {
+			distance = calculateDistance();
+		}
+		return distance;
+	}
 	
+		/**
+	 *
+	 * @return Total track distance by calculating distance of each TrackSegment
+	 */
+	private double calculateDistance() {
+		double dist=0;
+		for (TrackSegment seg : TrackSegmentList ) {
+			dist += seg.calculateDistance();
+		}
+		return dist;
+	}
 }
