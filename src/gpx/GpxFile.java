@@ -10,6 +10,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
@@ -114,6 +116,7 @@ public class GpxFile {
 							}
 							break;
 						default:
+							Logger.getLogger(GpxFile.class.getName()).log(Level.SEVERE, null, "Unknown XML tag " + xmlr.getLocalName());
 							break;
 					}
 					break;
